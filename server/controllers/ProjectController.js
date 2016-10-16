@@ -3,7 +3,7 @@ var Resource = require('resourcejs');
 module.exports = function(app, route) {
 
   // Setup the controller for REST;
-  Resource(app, '', route, app.models.project).rest();
+  Resource(app, '/api', route, app.models.project).rest();
 
   // Return middleware.
   return function(req, res, next) {

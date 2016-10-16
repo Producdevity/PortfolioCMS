@@ -1,3 +1,3 @@
 module.exports = {
-  movie: require('./Project')
+  project: require('./Project')
 };

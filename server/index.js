@@ -1,7 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var Resource = require('resourcejs');
 var methodOverride = require('method-override');
 var morgan = require('morgan');
 var _ = require('lodash');
