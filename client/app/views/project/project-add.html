@@ -1,0 +1,11 @@
+<form role="form">
+  <div class="form-group">
+    <label for="title" class="control-label">Title</label>
+    <input type="text" ng-model="vm.project.title" class="form-control" id="title" placeholder="Enter the project title">
+  </div>
+  <div class="form-group">
+    <label for="url" class="control-label">URL</label>
+    <input type="text" ng-model="vm.project.url" class="form-control" id="url" placeholder="Enter the project URL">
+  </div>
+  <input type="submit" class="btn btn-primary" ng-click="vm.saveProject()" value="Save">
+</form>
