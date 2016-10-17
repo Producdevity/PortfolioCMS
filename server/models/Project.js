@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 // Create ProjecSchema
-var ProjecSchema = new mongoose.Schema({
+var ProjecSchema = new Schema({
   title: {
     type: String,
     required: true

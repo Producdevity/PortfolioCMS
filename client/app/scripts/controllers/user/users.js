@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc function
- * @name clientApp.controller:ProjectsController
+ * @name clientApp.controller:UserCtrl
  * @description
- * # ProjectsController
+ * # UserCtrl
  * Controller of the clientApp
  */
 angular.module('clientApp')
-  .controller('ProjectsCtrl', function (Project) {
+  .controller('UserCtrl', function (User) {
     var vm = this;
 
-    vm.projects = Project.getList().$object;
+    vm.users = User.getList().$object;
 
   });
 

@@ -29,7 +29,7 @@ angular
       })
       .when('/projects', {
         templateUrl: 'views/project/projects.html',
-        controller: 'ProjectsController',
+        controller: 'ProjectsCtrl',
         controllerAs: 'vm'
       })
       .when('/create/project', {
@@ -52,31 +52,32 @@ angular
         controller: 'ProjectEditCtrl',
         controllerAs: 'vm'
       })
+      .when('/users', {
+        templateUrl: 'views/user/users.html',
+        controller: 'UserCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/create/user', {
+        templateUrl: 'views/user/user-add.html',
+        controller: 'UserAddCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/user/:id', {
+        templateUrl: 'views/user/user-view.html',
+        controller: 'UserViewCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/user/:id/delete', {
+        templateUrl: 'views/user/user-delete.html',
+        controller: 'UserDeleteCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/user/:id/edit', {
+        templateUrl: 'views/user/user-edit.html',
+        controller: 'UserEditCtrl',
+        controllerAs: 'vm'
+      })
       .otherwise({
         redirectTo: '/'
       });
-  })
-  .factory('ProjectRestangular', function(Restangular) {
-    return Restangular.withConfig(function(RestangularConfigurer) {
-      RestangularConfigurer.setRestangularFields({
-        id: '_id'
-      });
-    });
-  })
-  .factory('Project', function(ProjectRestangular) {
-    return ProjectRestangular.service('project');
-  })
-  .directive('preview', function() {
-    return {
-      restrict: 'E',
-      scope: {
-        src: '='
-      },
-      templateUrl: 'views/directives/preview.html'
-    };
-  })
-  .filter('trusted', function ($sce) {
-    return function(url) {
-      return $sce.trustAsResourceUrl(url);
-    };
   });

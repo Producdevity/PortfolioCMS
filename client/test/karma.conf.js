@@ -26,6 +26,12 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/lodash/lodash.js',
       'bower_components/restangular/dist/restangular.js',
+      'bower_components/angular-permission/dist/angular-permission.js',
+      'bower_components/angular-permission/dist/angular-permission-ui.js',
+      'bower_components/angular-permission/dist/angular-permission-ng.js',
+      'bower_components/angular-sanitize/angular-sanitize.js',
+      'bower_components/angular-socket-io/socket.js',
+      'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
