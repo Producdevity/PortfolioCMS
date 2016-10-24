@@ -6,7 +6,7 @@
  * @description
  * # preview
  * preview directive
- */
+ */ 
 angular.module('clientApp')
   .directive('preview', function() {
     return {

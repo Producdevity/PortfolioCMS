@@ -15,19 +15,12 @@ var _ = require('lodash');
 // Create the application
 var app = express();
 
-// Add Middleware necessary for REST API's
+// Set logger
 app.use(morgan('dev'));
+// Add Middleware necessary for REST API's
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(cookieParser());
-
-// Set view engine to EJS and set the directory for the views
-// app.set('view engine', 'ejs');
-// app.set('views', path.resolve(__dirname, 'client', 'views'));
-
-//serve static files from client folder.
-//ex: libs/bootstrap/bootstrap.css in our html actually points to client/libs/bootstrap/bootstrap.css
-// app.use(express.static(path.resolve(__dirname, 'client')));
 
 // override with the X-HTTP-Method-Override header in the request
 app.use(methodOverride('X-HTTP-Method-Override'));
@@ -77,6 +70,10 @@ mongoose.connection.once('open', function() {
   // use '/auth' for passport routes
   var auth = require('./routes/passport');
   app.use('/auth', auth);
+  // var Resource = require('resourcejs');
+  // var User = require('./models/User');
+  // var AuthRouter = require('./controllers/AuthController');
+  // Resource(app, '/auth', 'user', User).rest();
 
   // Load all the models (Schema)
   app.models = require('./models/index');

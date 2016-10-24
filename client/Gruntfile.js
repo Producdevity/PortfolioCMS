@@ -37,9 +37,30 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['wiredep']
       },
-      js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all', 'newer:jscs:all'],
+      jsControllers: {
+        files: ['<%= yeoman.app %>/scripts/controllers/**/*.js'],
+        tasks: ['concat:controllers', 'newer:jshint:controllers', 'newer:jscs:controllers',],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+      jsServices: {
+        files: ['<%= yeoman.app %>/scripts/services/**/*.js'],
+        tasks: ['concat:services', 'newer:jshint:services', 'newer:jscs:services',],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+      jsFilters: {
+        files: ['<%= yeoman.app %>/scripts/filters/**/*.js'],
+        tasks: ['concat:filters', 'newer:jshint:all', 'newer:jscs:all',],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+      jsDirectives: {
+        files: ['<%= yeoman.app %>/scripts/directives/**/*.js'],
+        tasks: ['concat:directives', 'newer:jshint:all', 'newer:jscs:all',],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -89,6 +110,10 @@ module.exports = function (grunt) {
                 '/app/styles',
                 connect.static('./app/styles')
               ),
+              connect().use(
+                '/dist',
+                connect.static('./dist')
+              ),
               connect.static(appConfig.app)
             ];
           }
@@ -127,7 +152,21 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/**/*.js',
+          '<%= yeoman.app %>/scripts/*.js'
+        ]
+      },
+      controllers: {
+        src: [
+          'Gruntfile.js',
+          '<%= yeoman.app %>/scripts/controllers/**/*.js'
+        ]
+      },
+      services: {
+        src: [
+          'Gruntfile.js',
+          '<%= yeoman.app %>/scripts/services/**/*.js',
+          '<%= yeoman.app %>/scripts/services/*.js'
         ]
       },
       test: {
@@ -147,7 +186,21 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/**/*.js'
+        ]
+      },
+      controllers: {
+        src: [
+          'Gruntfile.js',
+          '<%= yeoman.app %>/scripts/controllers/**/*.js',
+          '<%= yeoman.app %>/scripts/controllers/*.js'
+        ]
+      },
+      services: {
+        src: [
+          'Gruntfile.js',
+          '<%= yeoman.app %>/scripts/services/**/*.js',
+          '<%= yeoman.app %>/scripts/services/*.js'
         ]
       },
       test: {
@@ -328,6 +381,28 @@ module.exports = function (grunt) {
     // concat: {
     //   dist: {}
     // },
+    concat: {
+      options: {
+        stripBanners: true,
+        separator: ';'
+      },
+      directives: {
+        src: [ '<%= yeoman.app %>/scripts/directives/*.js', '<%= yeoman.app %>/scripts/directives/**/*.js' ],
+        dest: '<%= yeoman.dist %>/build/directives.js'
+      },
+      controllers: {
+        src: [ '<%= yeoman.app %>/scripts/controllers/*.js', '<%= yeoman.app %>/scripts/controllers/**/*.js' ],
+        dest: '<%= yeoman.dist %>/build/controllers.js'
+      },
+      services: {
+        src: [ '<%= yeoman.app %>/scripts/services/*.js', '<%= yeoman.app %>/scripts/services/**/*.js' ],
+        dest: '<%= yeoman.dist %>/build/services.js'
+      },
+      filters: {
+        src: [ '<%= yeoman.app %>/scripts/filters/*.js', '<%= yeoman.app %>/scripts/filters/**/*.js' ],
+        dest: '<%= yeoman.dist %>/build/filters.js'
+      }
+    },
 
     imagemin: {
       dist: {

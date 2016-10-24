@@ -11,10 +11,14 @@
 angular
   .module('clientApp', [
     'ngRoute',
-    'restangular'
+    'restangular',
+    'satellizer'
   ])
-  .config(function ($routeProvider, RestangularProvider) {
+  .config(function ($routeProvider, RestangularProvider, $httpProvider, $authProvider) {
     RestangularProvider.setBaseUrl('http://localhost:3000/api');
+    $httpProvider.defaults.withCredentials = true;
+    $authProvider.baseUrl = 'http://localhost:3000/';
+    // $authProvider.loginUrl = 'http://localhost:3000/auth';
 
     $routeProvider
       .when('/', {
@@ -75,6 +79,16 @@ angular
       .when('/user/:id/edit', {
         templateUrl: 'views/user/user-edit.html',
         controller: 'UserEditCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/register', {
+        templateUrl: 'views/auth/register.html',
+        controller: 'AuthCtrl',
+        controllerAs: 'vm'
+      })
+      .when('/login', {
+        templateUrl: 'views/auth/login.html',
+        controller: 'AuthCtrl',
         controllerAs: 'vm'
       })
       .otherwise({

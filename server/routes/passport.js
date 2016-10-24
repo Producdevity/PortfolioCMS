@@ -3,6 +3,7 @@ var router = express.Router();
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var BasicStrategy = require('passport-http').BasicStrategy;
 
 var User = require('../models/User');
 
@@ -57,21 +58,40 @@ router.post('/register', function(req, res) {
   }
 });
 
+// passport.use(new BasicStrategy({usernameField: 'email'},
+//   function(username, password, done){
+//     User.getUserByEmail(username, function(err, user){
+//       if(err) throw err;
+//       if(!user){ return done(null, false, { success: false, message: 'Incorrect email.' }) }
+//       User.comparePassword(password, user.password, function(err, isMatch){
+//         if(err) throw err;
+//         if(isMatch){
+//           return done(null, user);
+//         } else {
+//           return done(null, false, { success: false, message: 'Incorrect password.' });
+//         }
+//       });
+//     });
+//   }
+// ));
+
 passport.use(new LocalStrategy({usernameField: 'email'},
-  function(username, password, done){
-    User.getUserByEmail(username, function(err, user){
-      if(err) throw err;
-      if(!user){ return done(null, false, { success: false, message: 'Incorrect email.' }) }
-      User.comparePassword(password, user.password, function(err, isMatch){
-        if(err) throw err;
-        if(isMatch){
-          return done(null, user);
-        } else {
-          return done(null, false, { success: false, message: 'Incorrect password.' });
-        }
+    function(username, password, done) {
+      User.getUserByEmail(username, function(err, user){
+        console.log('getUserByEmail');
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        User.comparePassword(password, user.password, function(err, isMatch){
+          if(err) throw err;
+          if(isMatch){
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        });
+
       });
-    });
-  }
+    }
 ));
 
 passport.serializeUser(function(user, done) {
@@ -85,6 +105,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/login', function(req, res, next ){
+  console.log('router.post/login');
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err) }
     if (!user) { return res.json(info) }
@@ -94,7 +115,14 @@ router.post('/login', function(req, res, next ){
       user: user
     });
   })(req, res, next);
+  console.log('router.post/login END');
 });
+
+// router.get('/api/me',
+//     passport.authenticate('basic', { session: false }),
+//     function(req, res) {
+//       res.json(req.user);
+//     });
 
 router.get('/logout', function(req, res){
   req.logout();

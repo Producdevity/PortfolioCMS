@@ -1,27 +1,42 @@
+var Resource = require('resourcejs');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var User = require('../models/User');
 var express = require('express');
 var router = express.Router();
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+module.exports = function(app, route) {
 
-var User = require('../models/User');
+  // Setup the controller for REST;
+  Resource(router, '/auth', 'auth', User).rest();
 
-/* GET Register. */
-router.get('/register', ensureAuthenticated, function(req, res) {
-  res.render('register', { title: 'Register' });
-});
+  // Return middleware.
+  return function(req, res, next) {
+    next();
+  };
+};
 
-/* GET Login */
-router.get('/login', ensureAuthenticated, function(req, res) {
-  res.render('login', { title: 'Login' });
-});
 
-/* POST Register User */
-router.post('/register', function(req, res) {
-  var name = req.body.name;
-  var email = req.body.email;
-  var password = req.body.password;
-  var password2 = req.body.password2;
+
+
+
+//
+// /* GET Register. */
+// router.get('/register', ensureAuthenticated, function(req, res) {
+//   res.render('register', { title: 'Register' });
+// });
+//
+// /* GET Login */
+// router.get('/login', ensureAuthenticated, function(req, res) {
+//   res.render('login', { title: 'Login' });
+// });
+//
+// /* POST Register User */
+// router.post('/register', function(req, res) {
+//   var name = req.body.name;
+//   var email = req.body.email;
+//   var password = req.body.password;
+//   var password2 = req.body.password2;
 
   //  Validation
   // req.checkBody('name', 'Name is required').notEmpty();
@@ -51,8 +66,8 @@ router.post('/register', function(req, res) {
   //   res.redirect('/users/login');
   // }
 
-});
-
-
-
-module.exports = router;
+// });
+//
+//
+//
+// module.exports = router;
